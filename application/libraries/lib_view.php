@@ -8,7 +8,9 @@ class Lib_view{
         $CI = &get_instance();
         $CI->load->view('admin/header.php', $d);
         $CI->load->view('admin/', $pagename, $data);
-        $CI->load->view('admin/footer.php');
+        $fdata = [];
+        $fdata['validation_errors'] = validation_errors();
+        $CI->load->view('admin/footer.php', $fdata);
     }
 }
 

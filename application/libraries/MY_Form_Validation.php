@@ -24,7 +24,7 @@ class MY_Form_Validation extends CI_Form_Validation {
         $CI = &get_instance();
         $tname = str_replace('_id', 's', $param);
         $CI->db->where($param, $str);
-        return ($Ci->db->count_all_result($tname) == 0);
+        return ($CI->db->count_all_result($tname) == 0);
     }
 
 }
