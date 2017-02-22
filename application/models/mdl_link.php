@@ -21,6 +21,18 @@ class Mdl_link extends CRUD{
             'rules' => 'required | valid_url',
         ],
     ];
+    var $edit_rules = [
+        [
+            'field' => 'descr',
+            'label' => 'Описание',
+            'rules' => 'required | valid_title',
+        ],
+        [
+            'field' => 'url',
+            'label' => 'URL',
+            'rules' => 'required | valid_url',
+        ],
+    ];
 }
 
 ?>

@@ -26,7 +26,7 @@ class CRUD extends CI_Model{
         }
     }
 
-    function edit(){
+    function edit($id){
         $this->form_validation->set_rules($this->edit_rules);
         if ($this->form_validation->run()){
             $data = array();
