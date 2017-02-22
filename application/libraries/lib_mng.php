@@ -43,6 +43,16 @@ class Lib_mng{
         $CI->{$md}->del($id);
         redirect('admin/'.$name.'s');
     }
+
+    public function show_index($name, $title){
+        $CI = &get_instance();
+        $md = 'mdl_'.$name;
+        $CI->load->model($md);
+        $list = $CI->{$md}->get_list();
+        $data = [];
+        $data['list'] = $list;
+        $CI->lib_view->admin_page($name.'/index', $data, $title);
+    }
 }
 
 ?>
