@@ -1,0 +1,1 @@
+<footer>Coopyright © 2012 - Aleksandr</footer>
