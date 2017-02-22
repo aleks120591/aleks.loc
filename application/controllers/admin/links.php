@@ -4,8 +4,8 @@ class Links extends CI_Controller{
 
     var $iname = 'link';
 
-    public function index(){
-        $this->lib_mng->show_index($this->iname, 'Список ссылок');
+    public function index($link_num = 0){
+        $this->lib_mng->show_index($this->iname, 'Список ссылок', $link_num);
     }
 
     public function __construct(){
@@ -24,6 +24,10 @@ class Links extends CI_Controller{
 
     public function del($id){
         $this->lib_mng->del($this->iname, $id);
+    }
+
+    public function sort($field){
+        $this->lib_mng->set_sort($this->iname, $field);
     }
 }
 

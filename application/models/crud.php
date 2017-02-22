@@ -53,7 +53,20 @@ class CRUD extends CI_Model{
         return $query->row_array();
     }
 
-    function get_list(){
+    function get_list($start_from = FALSE){
+        // set list of sort
+        $sort_by = $this->session->userdata('sort_by');
+        $sort_dir = $this->session->userdata('sort_dir');
+
+        // if not empty value - set param sort
+        if (!empty($sort_by)) {
+            $this->db->order_by($sort_by, $sort_dir);
+        }
+
+        if ($start_from !== FALSE) {
+            $this->db->limit($this->config->item('per_page'), $start_from); // limit quantity set quantity of item and position counter
+        }
+
         $query = $this->db->get($this->table);
         return $query->result_array();
     }

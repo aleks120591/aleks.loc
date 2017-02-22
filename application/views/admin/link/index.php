@@ -1,12 +1,12 @@
 <?php if (!empty($list)): ?>
 
-    <table border="1" cellpadding="5">
+    <table border="1" cellpadding="5" class="border">
 
         <tr>
-            <th>ID ссылки</th>
-            <th>Название ссылки</th>
-            <th>URL ссылки</th>
-            <th>Кликов</th>
+            <th><?php echo anchor('admin/links/sort/link_id', 'ID ссылки'); ?></th>
+            <th><?php echo anchor('admin/links/sort/descr', 'Название ссылки'); ?></th>
+            <th><?php echo anchor('admin/links/sort/url', 'URL ссылки'); ?></th>
+            <th><?php echo anchor('admin/links/sort/clicks', 'Кликов'); ?></th>
         </tr>
 
         <?php foreach ($list as $one): ?>
@@ -20,9 +20,29 @@
 
     </table>
 
+    <p><?php echo $page_links; ?></p>
+
     <p><?php echo anchor('admin/links/add', 'Добавить новую ссылку'); ?></p>
 
 <?php else: ?>
     <p>В базе нет записей.</p>
 
 <?php endif ?>
+
+<?php echo form_open('admin/links/search'); ?>
+
+<table>
+    <tr>
+        <td><input type="text" name="str" value=""></td>
+        <td>
+            <select name="field">
+                <option value="link_id">ID ссылки</option>
+                <option value="descr">Название ссылки</option>
+                <option value="url">URL</option>
+            </select>
+        </td>
+        <td><input type="submit" value="Найти"></td>
+    </tr>
+</table>
+
+</form>

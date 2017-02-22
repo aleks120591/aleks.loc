@@ -12,6 +12,27 @@ class Lib_view{
         $fdata['validation_errors'] = validation_errors();
         $CI->load->view('admin/footer.php', $fdata);
     }
+
+    function user_page($pagename = ''){
+        $CI = &get_instance();
+        $CI->db->where('page_id', $pagename);
+        $query = $CI->db->get('pages');
+        if ($query->num_rows() > 0){
+            $row = $query->row_array();
+            $c = [];
+            $c['content'] = $row['text'];
+            if ($row['showed'] != 1){
+                die('Эта страница скрыта.');
+            }
+        }else{
+            die('Такой страницы не существует.');
+        }
+        $d = [];
+        $d['page_title'] = $row['title'];
+        $CI->load->view('header.php', $d);
+        $CI->load->view('content', $c);
+        $CI->load->view('footer.php');
+    }
 }
 
 ?>
