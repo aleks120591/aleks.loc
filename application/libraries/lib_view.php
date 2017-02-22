@@ -14,24 +14,51 @@ class Lib_view{
     }
 
     function user_page($pagename = ''){
+
         $CI = &get_instance();
+
+        // put middle content
         $CI->db->where('page_id', $pagename);
         $query = $CI->db->get('pages');
-        if ($query->num_rows() > 0){
+
+        if ($query->num_rows() > 0) {
             $row = $query->row_array();
-            $c = [];
+
+            $c = array();
             $c['content'] = $row['text'];
-            if ($row['showed'] != 1){
-                die('Эта страница скрыта.');
+
+            if($row['showed'] != 1){
+                die('Эта страница скрыта');
             }
-        }else{
-            die('Такой страницы не существует.');
+        } else {
+            die('Такой страницы не существует');
         }
-        $d = [];
+
+        $d = array();
         $d['page_title'] = $row['title'];
+
         $CI->load->view('header.php', $d);
         $CI->load->view('content', $c);
         $CI->load->view('footer.php');
+
+    }
+    function simple_page($page, $data = array(), $title){
+
+        $CI = &get_instance();
+
+        $d = array();
+        $d['page_title'] = $title;
+
+        $CI->load->view('header.php', $d);
+
+
+        $CI->load->view($page, $data);
+
+        $fdata = array();
+        $fdata['validation_errors'] = validation_errors();
+
+        $CI->load->view('footer.php', $fdata);
+
     }
 }
 

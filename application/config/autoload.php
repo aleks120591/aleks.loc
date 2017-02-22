@@ -9,6 +9,7 @@ $autoload['libraries'] = array(
     'form_validation',
     'lib_view',
     'lib_mng',
+    'lib_auth',
 );
 
 $autoload['drivers'] = array();

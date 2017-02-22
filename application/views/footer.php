@@ -1,4 +1,6 @@
 <p></p>
-<footer>Coopyright © 2012 - Aleksandr</footer>
+
+<footer>Coopyright © 2012 - Vladimir Kamuz</footer>
+
 </body>
 </html>

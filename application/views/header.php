@@ -26,7 +26,9 @@
     </style>
 </head>
 <body>
+
 <ul>
-    <li><?php echo anchor('/', 'Главная'); ?></li>
+    <li><?php echo anchor('', 'Главная'); ?></li>
 </ul>
+
 <h1><?php echo $page_title; ?></h1>
