@@ -12,6 +12,17 @@ class Lib_mng{
             $CI->lib_view->admin_page($name.'/add', array(), $title);
         }
     }
+
+    public function show($name, $id, $title){
+        $CI = &get_instance();
+        $md = 'mdl_'.$name;
+        $CI->load->model($md);
+        $data = $CI->{$md}->get($id);
+        if (empty($data)){
+            die('Такой записи нет в базе.');
+        }
+        $CI->lib_view->admin_page($name.'/view', $data, $title);
+    }
 }
 
 ?>
