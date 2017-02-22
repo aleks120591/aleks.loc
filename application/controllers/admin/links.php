@@ -29,6 +29,10 @@ class Links extends CI_Controller{
     public function sort($field){
         $this->lib_mng->set_sort($this->iname, $field);
     }
+
+    public function search(){
+        $this->lib_mng->do_search($this->iname);
+    }
 }
 
 ?>

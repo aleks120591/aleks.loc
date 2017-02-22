@@ -1,54 +1,80 @@
 <?php
 
-class Lib_mng{
+class Lib_mng
+{
 
-    public function add($name, $title = ''){
+    public function add($name, $title = '')
+    {
         $CI = &get_instance();
-        $md = 'mdl_'.$name;
+        $md = 'mdl_' . $name;
         $CI->load->model($md);
-        if ($CI->{$md}->add() !== false){
-            redirect('admin/'.$name.'s');
-        }else{
-            $CI->lib_view->admin_page($name.'/add', array(), $title);
+        if ($CI->{$md}->add() !== false) {
+            redirect('admin/' . $name . 's');
+        } else {
+            $CI->lib_view->admin_page($name . '/add', array(), $title);
         }
     }
 
-    public function edit($name, $id, $title){
+    public function edit($name, $id, $title)
+    {
         $CI = &get_instance();
-        $md = 'mdl_'.$name;
+        $md = 'mdl_' . $name;
         $CI->load->model($md);
         $data = $CI->{$md}->get($id);
-        if ($CI->{$md}->edit($id) !== false){
-            redirect('admin/'.$name.'s');
-        }else{
-            $CI->lib_view->admin_page($name.'/edit', $data, $title);
+        if ($CI->{$md}->edit($id) !== false) {
+            redirect('admin/' . $name . 's');
+        } else {
+            $CI->lib_view->admin_page($name . '/edit', $data, $title);
         }
     }
 
-    public function show($name, $id, $title){
+    public function show($name, $id, $title)
+    {
         $CI = &get_instance();
-        $md = 'mdl_'.$name;
+        $md = 'mdl_' . $name;
         $CI->load->model($md);
         $data = $CI->{$md}->get($id);
-        if (empty($data)){
+        if (empty($data)) {
             die('Такой записи нет в базе.');
         }
-        $CI->lib_view->admin_page($name.'/view', $data, $title);
+        $CI->lib_view->admin_page($name . '/view', $data, $title);
     }
 
-    public function del($name, $id){
+    public function del($name, $id)
+    {
         $CI = &get_instance();
-        $md = 'mdl_'.$name;
+        $md = 'mdl_' . $name;
         $CI->load->model($md);
         $CI->{$md}->del($id);
-        redirect('admin/'.$name.'s');
+        redirect('admin/' . $name . 's');
+    }
+
+    public function set_sort($name, $field)
+    {
+        $CI = &get_instance();
+        $md = 'mdl_' . $name;
+        $CI->load->model($md);
+
+        // array with data for session
+        $data = array();
+        $data['sort_by'] = $field;
+        $data['sort_dir'] = 'ASC';
+
+        // if in session current sort - change opposite
+        if (($CI->session->userdata('sort_by') == $field) AND ($CI->session->userdata('sort_dir') == 'ASC')) {
+            $data['sort_dir'] = 'DESC';
+        }
+
+        // record into session
+        $CI->session->set_userdata($data);
+
+        redirect('admin/' . $name . 's');
     }
 
     public function show_index($name, $title = '', $start_page = 0)
     {
         // will be not reset list?
-        if ($start_page === 'list')
-        {
+        if ($start_page === 'list') {
             $this->reset_set(); // here reset list
             $start_page = 0; // set 0 for reset
         }
@@ -94,26 +120,27 @@ class Lib_mng{
 
     }
 
-    public function set_sort($name, $field)
+    public function do_search($name)
     {
         $CI = &get_instance();
-        $md = 'mdl_' . $name;
-        $CI->load->model($md);
 
-        // array with data for session
-        $data = array();
-        $data['sort_by'] = $field;
-        $data['sort_dir'] = 'ASC';
+        $search = $CI->input->post('str');
+        $search_by = $CI->input->post('field');
 
-        // if in session current sort - change opposite
-        if (($CI->session->userdata('sort_by') == $field) AND ($CI->session->userdata('sort_dir') == 'ASC'))
-        {
-            $data['sort_dir'] = 'DESC';
+        // if nothing input into form - redirect
+        if (empty($search)) {
+            redirect('admin/' . $name . 's');
         }
 
-        // record into session
+        // set data for session
+        $data = array();
+        $data['search'] = $search;
+        $data['search_by'] = $search_by;
+
+        // record to the session
         $CI->session->set_userdata($data);
 
+        // redirect to list of records
         redirect('admin/' . $name . 's');
     }
 
@@ -125,9 +152,12 @@ class Lib_mng{
         $data = array();
         $data['sort_by'] = '';
         $data['sort_dir'] = '';
+        $data['search'] = '';
+        $data['search_by'] = '';
 
         // delete data of session
         $CI->session->unset_userdata($data);
+
     }
 }
 

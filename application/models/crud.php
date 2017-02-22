@@ -54,6 +54,7 @@ class CRUD extends CI_Model{
     }
 
     function get_list($start_from = FALSE){
+
         // set list of sort
         $sort_by = $this->session->userdata('sort_by');
         $sort_dir = $this->session->userdata('sort_dir');
@@ -61,6 +62,15 @@ class CRUD extends CI_Model{
         // if not empty value - set param sort
         if (!empty($sort_by)) {
             $this->db->order_by($sort_by, $sort_dir);
+        }
+
+        // for search
+        $search = $this->session->userdata('search');
+        $search_by = $this->session->userdata('search_by');
+
+        // if not empty value - set search
+        if (!empty($search)) {
+            $this->db->like($search_by, $search);
         }
 
         if ($start_from !== FALSE) {
