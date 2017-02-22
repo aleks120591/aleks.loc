@@ -35,6 +35,14 @@ class Lib_mng{
         }
         $CI->lib_view->admin_page($name.'/view', $data, $title);
     }
+
+    public function del($name, $id){
+        $CI = &get_instance();
+        $md = 'mdl_'.$name;
+        $CI->load->model($md);
+        $CI->{$md}->del($id);
+        redirect('admin/'.$name.'s');
+    }
 }
 
 ?>
