@@ -1,6 +1,6 @@
 <?php
 
-class Crud extends CI_Model{
+class CRUD extends CI_Model{
 
     var $table = "";
     var $key_id = "";
