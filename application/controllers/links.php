@@ -12,6 +12,10 @@ class Links extends CI_Controller{
         $this->load->model($mdl_name);
     }
 
+    public function edit($id){
+        $this->lib_mng->edit($this->iname, $id, 'Редактирование ссылки');
+    }
+
     public function show($id){
         $this->lib_mng->show($this->iname, $id, 'Просмотр ссылки');
     }
